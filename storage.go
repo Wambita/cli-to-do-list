@@ -29,7 +29,7 @@ func NewStorage[T any](fileName string) *Storage[T] {
 }
 
 //save
-func(s *Storage[T]) save(data T) error {
+func(s *Storage[T]) Save(data T) error {
 	//convert data into json
 	fileData, err := json.MarshalIndent(data, "","    ")
 	if err != nil {
@@ -39,3 +39,13 @@ func(s *Storage[T]) save(data T) error {
 	return os.WriteFile(s.FileName, fileData, 0644)
 }
 //load
+func (s *Storage[T]) Load(data *T) error {
+	fileData, err := os.ReadFile(s.FileName)
+
+	if err != nil {
+		return err
+	}
+
+	//converts the json data and populate the data s
+	return json.Unmarshal(fileData, data)
+}
