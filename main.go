@@ -1,11 +1,18 @@
 package main
 
 func main() {
+	//create todos list
 	todos := Todos{}
-	todos.add("Buy milk")
-	todos.add("Buy bread")
 
-	todos.delete(0)
-	todos.toggle(0)
-	todos.print()
+	//store todos in  a json file
+	storage := NewStorage[Todos]("todos.json")
+
+	//populate table with json data
+	storage.Load(&todos)
+
+	cmdFlags := NewCmdFlags()
+	cmdFlags.Execute(&todos)
+
+	//save the todolist
+	storage.Save(todos)
 }
