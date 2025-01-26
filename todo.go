@@ -47,4 +47,19 @@ func (todos *Todos) delete(index int) error {
 }
 
 // func toggle that changes the status of todo completed T or F
-// func (todos *Todos) toggle
+func (todos *Todos) toggle (index int) error {
+	t := *todos
+	if  err := t.validateIndex(index); err != nil {
+	}
+
+	isCompleted := t[index].Completed
+	if !isCompleted {
+		completionTime := time.Now() 
+		t[index].CompletedAt = &completionTime
+	}
+	t[index].Completed = !isCompleted
+	return nil
+}
+
+
+//func edit 
