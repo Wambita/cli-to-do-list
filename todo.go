@@ -38,7 +38,12 @@ func (todos *Todos) validateIndex(index int) error {
 
 // delete method
 func (todos *Todos) delete(index int) error {
-	
+	t := *todos
+	if  err := t.validateIndex(index); err != nil {
+		return err
+	}
+	*todos = append(t[:index], t[index+1:]...)
+	return nil 
 }
 
 // func toggle that changes the status of todo completed T or F
